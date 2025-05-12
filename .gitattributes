@@ -1,0 +1,5 @@
+# Treat Jupyter notebooks as documentation, not source code
+*.ipynb linguist-documentation=true
+
+# Python as source
+*.py linguist-language=Python
