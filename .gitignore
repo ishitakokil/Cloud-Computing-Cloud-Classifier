@@ -1,0 +1,40 @@
+# Bytecode and caches
+__pycache__/
+*.pyc
+.pytest_cache/
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Python environment
+.venv/
+.env
+*.egg-info/
+
+# Logs
+*.log
+
+# Data and artifacts (ignore contents, allow structure)
+data/*
+models/*
+runs/
+artifacts/
+
+# Allow placeholder files
+!.gitkeep
+
+# AWS credentials and private settings
+.aws/
+
+# Docker-related
+*.tar
+*.img
+docker-compose.override.yml

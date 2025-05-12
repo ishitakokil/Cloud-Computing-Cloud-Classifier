@@ -1,0 +1,80 @@
+run_config:
+  name: cloud-classifier-pipeline
+  author: Michael Fedell
+  version: "1.0"
+  description: Pipeline to classify cloud types from atmospheric data
+  dependencies: requirements.txt
+  random_seed: 42
+  output: runs
+
+paths:
+  raw_data: data/raw/clouds.data
+  cleaned_data: data/processed/cleaned.csv
+  features_data: data/processed/features.csv
+  model_output: models/model.pkl
+  metrics_output: models/metrics.json
+  chart_output: models/roc_curve.png
+
+data_source:
+  url: "https://archive.ics.uci.edu/ml/machine-learning-databases/undocumented/taylor/cloud.data"
+  columns:
+    - visible_mean
+    - visible_max
+    - visible_min
+    - visible_mean_distribution
+    - visible_contrast
+    - visible_entropy
+    - visible_second_angular_momentum
+    - IR_mean
+    - IR_max
+    - IR_min
+
+preprocessing:
+  dropna: true
+  normalize_columns:
+    - visible_mean
+    - visible_max
+    - IR_mean
+    - IR_max
+  fillna_method: none
+  encode_target: true
+
+generate_features:
+  calculate_norm_range:
+    IR_norm_range:
+      min_col: IR_min
+      max_col: IR_max
+      mean_col: IR_mean
+  log_transform:
+    log_entropy: visible_entropy
+  multiply:
+    entropy_x_contrast:
+      col_a: visible_contrast
+      col_b: visible_entropy
+
+labeling:
+  method: threshold         # or "kmeans"
+  threshold: 200            # threshold for IR_mean
+  n_clusters: 3             # only used if method is kmeans
+
+model:
+  type: RandomForestClassifier
+  target_column: cloud_type
+  test_size: 0.3
+  params:
+    n_estimators: 150
+    max_depth: 12
+    random_state: 123
+
+evaluation:
+  metrics:
+    - accuracy
+    - f1
+    - roc_auc
+  plot_roc: true
+
+aws:
+  upload: true  # Set True or False to upload results to AWS
+  bucket_name: jji9639-cloud-classifier
+  region: "us-east-2"
+

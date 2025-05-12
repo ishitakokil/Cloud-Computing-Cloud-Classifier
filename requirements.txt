@@ -1,0 +1,22 @@
+# Core
+pandas
+numpy
+pyyaml
+joblib
+
+# Modeling
+scikit-learn
+
+# Visualization
+matplotlib
+seaborn
+
+# AWS (for S3 upload)
+boto3
+
+# Testing
+pytest
+
+# Code style
+pylint
+requests
