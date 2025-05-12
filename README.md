@@ -1,4 +1,4 @@
-# MLDS 423 Cloud Engineering Homework 2
+# Cloud Computing Cloud Classifier
 
 This project implements a cloud-native, end-to-end machine learning pipeline to classify cloud types using satellite-based atmospheric data. The system handles data acquisition, feature engineering, exploratory data analysis (EDA), model training, evaluation, and artifact upload to AWS S3 — all inside a Dockerized, reproducible environment.
 
